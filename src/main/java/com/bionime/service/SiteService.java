@@ -27,7 +27,7 @@ public class SiteService {
     {
         List<SiteEntity> siteList = repository.findAll();
          
-        System.out.println("SiteService: " + siteList.size());
+        System.out.println("@@@ Andy Deubg:  getAllSite: " + siteList.size());
         
         if(siteList.size() > 0) {
             return siteList;
@@ -115,45 +115,18 @@ public class SiteService {
         }
     } 
     
-    /*
-     
-    
-    public String createOrUpdateSite(SiteEntity entity) throws RecordNotFoundException 
+    public Boolean deleteSiteById(int id) throws RecordNotFoundException 
     {
-    	String result ="";
-
-    	Optional<SiteEntity> site = repository.findById(entity.getId());
-        if(!site.isPresent()) {
-        	site = repository.findByName(entity.getName());
-        }
-        
-
+        Optional<SiteEntity> employee = repository.findById(id);
          
-        if(site.isPresent()) 
+        if(employee.isPresent()) 
         {
-        	result = "Update Site Suceess: " + entity.getName();
-
-
-        	SiteEntity newEntity = site.get();
-            newEntity.setName(entity.getName());
-            newEntity.setStaffCount(entity.getStaffCount());
-            newEntity.setLastUpdate(entity.getLastUpdate());
- 
-            newEntity = repository.save(newEntity);
-             
-            System.out.println("@@@ Andy Deubg: SiteService result: " +result);
-
-            return result;
+            repository.deleteById(id);
+            return true;
         } else {
-        	result = "Create New Site Suceess: " + entity.getName();
-            entity = repository.save(entity);
-            System.out.println("@@@ Andy Deubg: SiteService result: " +result);
-
-            return result;
+            throw new RecordNotFoundException("No employee record exist for given id");
         }
     } 
-     * 
-     * */
     
      
 }

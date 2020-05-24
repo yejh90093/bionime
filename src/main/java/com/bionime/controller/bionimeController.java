@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,29 +35,45 @@ public class bionimeController {
 	public String bionimeIndex() {
 		return "bionimeAddSite";
 	}
+
+	@Autowired
+	SiteService service;
+
+	@GetMapping("/bionimeListSite")
+	public String bionimeListSite(Model model) {
+		model.addAttribute("sites", service.getAllSite());
+		return "bionimeListSite";
+	}
+
 	
-    @Autowired
-    SiteService service;
- 
-    @GetMapping("/allSite")
-    public ResponseEntity<List<SiteEntity>> getAllSite() {
-        List<SiteEntity> list = service.getAllSite();
- 
-        System.out.println("bionimeController: " + list.size());
-        System.out.println("bionimeController: " + list.get(0).toString());
+	 
+	@DeleteMapping("/deleteSite/{id}")
+	public ResponseEntity<String> deleteSite(@PathVariable int id) throws RecordNotFoundException {
 
+		System.out.println("@@@ Andy Debug deletePost: " + id);
+
+        Boolean isRemoved = service.deleteSiteById(id);
+		System.out.println("@@@ Andy Debug deletePost: " + isRemoved);
+
+        if (!isRemoved) {
+        	return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+        }
         
-        return new ResponseEntity<List<SiteEntity>>(list, new HttpHeaders(), HttpStatus.OK);
-    }
-    
-    @PostMapping("/addSite")
-    public ResponseEntity<Map<String, Object>> createOrUpdateSite(@RequestBody SiteEntity site) throws RecordNotFoundException {
-    	
-        System.out.println("bionimeController: " + site);
-        System.out.println("createOrUpdateEmployee: " + site);
+        return new ResponseEntity<String>(HttpStatus.OK);
 
-    	Map<String, Object> updated = service.createSite(site);
-        return new ResponseEntity<Map<String, Object>>(updated, new HttpHeaders(), HttpStatus.OK);
-    }
-    
+ 
+	
+	}
+
+	@PostMapping("/addSite")
+	public ResponseEntity<Map<String, Object>> createOrUpdateSite(@RequestBody SiteEntity site)
+			throws RecordNotFoundException {
+
+		System.out.println("bionimeController: " + site);
+		System.out.println("createOrUpdateEmployee: " + site);
+
+		Map<String, Object> updated = service.createSite(site);
+		return new ResponseEntity<Map<String, Object>>(updated, new HttpHeaders(), HttpStatus.OK);
+	}
+
 }

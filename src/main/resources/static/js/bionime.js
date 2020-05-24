@@ -5,12 +5,33 @@ $("#addSiteSubmit").click(function() {
 	if (newSiteName == "") {
 		$("#addSiteName").attr("placeholder", "Assign a new site name here");
 	} else {
-		alert(newSiteName)
 		event.preventDefault();
 		ajaxPost();
 
 	}
 });
+
+function deleteSite(id) {
+
+//	$.get("/bionime/deleteSite/" + id, function(result) {
+//		console.log(result);
+//
+//	}).done(function(data) {
+//		location.reload();
+//	});
+	
+	
+	
+	$.ajax({
+	    url: '/bionime/deleteSite/' + id,
+	    type: 'DELETE',
+	    success: function(result) {
+	    	console.log("deleteSite: " + result );
+	    	location.reload();
+	        // Do something with the result
+	    }
+	});
+}
 
 function ajaxPost() {
 
@@ -23,7 +44,7 @@ function ajaxPost() {
 	$.ajax({
 		type : "POST",
 		contentType : "application/json",
-		url : window.location + "/addSite",
+		url : "/bionime/addSite",
 		data : JSON.stringify(formData),
 		dataType : 'json',
 		success : function(result) {
