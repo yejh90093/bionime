@@ -16,7 +16,7 @@ public interface SiteRepository
         extends JpaRepository<SiteEntity, Integer> {
  
     @Query("SELECT s FROM SiteEntity s WHERE LOWER(s.name) = LOWER(:name)")
-    public Optional<SiteEntity> findByName(@Param("name") String lastName);
+    public Optional<SiteEntity> findByName(@Param("name") String name);
 	
 
 }

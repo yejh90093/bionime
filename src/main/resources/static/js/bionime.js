@@ -1,40 +1,40 @@
 $("#addSiteSubmit").click(function() {
-
-	newSiteName = $("#addSiteName").val();
-
+	var newSiteName = $("#addSiteName").val();
 	if (newSiteName == "") {
 		$("#addSiteName").attr("placeholder", "Assign a new site name here");
 	} else {
 		event.preventDefault();
-		ajaxPost();
-
+		ajaxPostAddSitr();
 	}
 });
 
 $("#addStaffSubmit").click(function() {
-
+	
 	var newStaffName = $("#addStaffName").val();
 	var newStaffID = $("#addStaffID").val();
 	var values = $('#my-select').val();
-
-	console.log(newStaffName);
-	console.log(newStaffID);
-	console.log(values);
+	
+	console.log("addStaffSubmit:" + values);
+	console.log("addStaffSubmit:" + (newStaffName == "" || newStaffID=="" || values==""));
+	
+	if (newStaffName == "" || newStaffID=="" || values=="") {
+		$("#addStaffResult").html("Request data should not empty");
+		
+	}else{
+		event.preventDefault();
+		ajaxPostAddStaff();
+	}
+	
 	//if (newSiteName == "") {
 	//	$("#addSiteName").attr("placeholder", "Assign a new site name here");
 	//} else {
 	//	event.preventDefault();
-//		ajaxPost();
-
+	//	ajaxPost();
 	//}
 });
 
-var values = $('#select-meal-type').val();
-
 
 $("#addSiteName").focus(function() {
-
-	console.log("focus");
 	$("#addSiteResult").html("");
 });
 
@@ -43,40 +43,20 @@ $('#my-select').multiSelect({
 	selectionHeader : "<div class='custom-header'>Assign to site</div>"
 })
 
-
-
-
-
-
-/*
- * 
- * $( "#result" ).load( "ajax/test.html", function() {
-  alert( "Load was performed." );
-});
- * */
-
-
 function deleteSite(id) {
-
-	// $.get("/bionime/deleteSite/" + id, function(result) {
-	// console.log(result);
-	//
-	// }).done(function(data) {
-	// location.reload();
-	// });
-
 	$.ajax({
 		url : '/bionime/deleteSite/' + id,
 		type : 'DELETE',
 		success : function(result) {
 			console.log("deleteSite: " + result);
 			location.reload();
-			// Do something with the result
 		}
 	});
 }
 
-function ajaxPost() {
+
+
+function ajaxPostAddSitr() {
 
 	// PREPARE FORM DATA
 	var formData = {
@@ -102,10 +82,51 @@ function ajaxPost() {
 	});
 
 	// Reset FormData after Posting
-	resetData();
-
+	resetSiteName();
 }
 
-function resetData() {
+
+
+function ajaxPostAddStaff() {
+
+	// PREPARE FORM DATA
+	var formData = {
+			id : $("#addStaffID").val(),
+			name : $("#addStaffName").val(),
+			serviceSite : String($('#my-select').val())
+	}
+	
+	
+	console.log( JSON.stringify(formData));
+
+	// DO POST
+	$.ajax({
+		type : "POST",
+		contentType : "application/json",
+		url : "/bionime/addStaff",
+		data : JSON.stringify(formData),
+		dataType : 'json',
+		success : function(result) {
+			console.log(result.Result);
+			$("#addStaffResult").html(result.Result);
+
+		},
+		error : function(e) {
+			alert("Error!")
+			console.log("ERROR: ", e);
+		}
+	});
+
+	// Reset FormData after Posting
+	resetStffInput();
+}
+
+function resetSiteName() {
 	$("#addSiteName").val("");
+}
+
+function resetStffInput() {
+	$("#addStaffID").val("");
+	$("#addStaffName").val("");
+	$("#my-select").val("");
 }

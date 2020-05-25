@@ -12,47 +12,47 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
- 
+
 @Entity
-@Table(name="bionime_Site")
-public class SiteEntity {
- 
+@Table(name = "bionime_Staff")
+public class StaffEntity {
+
 	@Id
-    @GeneratedValue
-    private int id;
-     
-    @Column(name="NAME")
-    private String name;
-     
-    @Column(name="STAFF_COUNT")
-    private int staffCount;
-     
-     
-    @Column(name="LAST_UPDATE")
-    private Timestamp lastUpdate;
+	@Column(name = "ID")
+	private String id;
 
-    @CreationTimestamp
-    @Column(name="CREATE_DATE")
-    private Timestamp createDate;
+	@Column(name = "NAME")
+	private String name;
 
-    public SiteEntity() {
-     
+	@Column(name = "SERVICE_SITE")
+	private String serviceSite;
+
+	@Column(name = "LAST_UPDATE")
+	private Timestamp lastUpdate;
+
+	@CreationTimestamp
+	@Column(name = "CREATE_DATE")
+	private Timestamp createDate;
+
+	public StaffEntity() {
+
 		this.lastUpdate = new Timestamp(System.currentTimeMillis());
 
-    }
+	}
 
-    public SiteEntity(String name) {
+	public StaffEntity(String name, String id, String serviceSite) {
+		this.id = id;
 		this.name = name;
-		this.name = name;
-    }
+		this.serviceSite = serviceSite;
+	}
 
-    //Setters and getters
- 
-    public int getId() {
+	// Setters and getters
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -64,12 +64,12 @@ public class SiteEntity {
 		this.name = name;
 	}
 
-	public int getStaffCount() {
-		return staffCount;
+	public String getServiceSite() {
+		return serviceSite;
 	}
 
-	public void setStaffCount(int staffCount) {
-		this.staffCount = staffCount;
+	public void setServiceSite(String serviceSite) {
+		this.serviceSite = serviceSite;
 	}
 
 	public Timestamp getLastUpdate() {
@@ -89,8 +89,8 @@ public class SiteEntity {
 	}
 
 	@Override
-    public String toString() {
-        return "SiteEntity [id=" + id + ", name=" + name + 
-                ", staffCount=" + staffCount + ", lastUpdate=" + lastUpdate   + "]";
-    }
+	public String toString() {
+		return "StaffEntity [id=" + id + ", name=" + name + ", serviceSite=" + serviceSite + ", lastUpdate="
+				+ lastUpdate + "]";
+	}
 }
