@@ -31,6 +31,12 @@ public class bionimeController {
 		return "bionimeAddSite";
 	}
 
+	@GetMapping("/bionimeAddStaff")
+	public String bionimeAddStaff(Model model) {
+		model.addAttribute("sites", service.getAllSite());
+		return "bionimeAddStaff";
+	}
+
 	@RequestMapping("/")
 	public String bionimeIndex() {
 		return "bionimeAddSite";
@@ -45,24 +51,20 @@ public class bionimeController {
 		return "bionimeListSite";
 	}
 
-	
-	 
 	@DeleteMapping("/deleteSite/{id}")
 	public ResponseEntity<String> deleteSite(@PathVariable int id) throws RecordNotFoundException {
 
 		System.out.println("@@@ Andy Debug deletePost: " + id);
 
-        Boolean isRemoved = service.deleteSiteById(id);
+		Boolean isRemoved = service.deleteSiteById(id);
 		System.out.println("@@@ Andy Debug deletePost: " + isRemoved);
 
-        if (!isRemoved) {
-        	return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
-        }
-        
-        return new ResponseEntity<String>(HttpStatus.OK);
+		if (!isRemoved) {
+			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
 
- 
-	
+		return new ResponseEntity<String>(HttpStatus.OK);
+
 	}
 
 	@PostMapping("/addSite")

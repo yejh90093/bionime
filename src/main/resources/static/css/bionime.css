@@ -37,3 +37,9 @@ body {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 } 
+
+.custom-header{
+	font-size: 14px;
+    color: #fff;
+    background: #000;
+}
