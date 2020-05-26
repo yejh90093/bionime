@@ -28,22 +28,17 @@
 	<thead>
 	</thead>
 	<tbody>
-		<tr th:if="${staffs.empty}">
+		<tr th:if="${staffList.empty}">
 			<td colspan="2"> No Staffs Available </td>
 		</tr>
- 		<tr th:unless="${staffs.empty}">
+ 		<tr th:unless="${staffList.empty}">
 			<th> SiteName </th>
 			<th> LastUpdate </th>
 		</tr>
-		
-		
-		<tr th:each="staff : ${staffs}">
+				
+		<tr th:each="staff : ${staffList}">
 			<td><span th:text="${staff.name}"> ID </span></td>
-			<td><span th:text="${staff.lastUpdate}"> Last Update </span></td>
-			<td>
-				<a th:href="..." style="display:block;">View</a> 
-				<a href="#" th:onclick="@{'deleteStaff('+${staff.id}+')'}" style="display:block;">delete</a>
-			</td>
+			<td><span th:text="${#dates.format(staff.date, 'yyyy-MM-dd HH:mm')}"> Last Update </span></td>
 		</tr>
 	</tbody>
 </table>

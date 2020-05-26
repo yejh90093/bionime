@@ -1,5 +1,6 @@
 package com.bionime.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -21,10 +22,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bionime.service.SiteService;
 import com.bionime.service.StaffService;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.bionime.repository.SiteRepository;
 import com.bionime.entity.SiteEntity;
 import com.bionime.entity.StaffEntity;
 import com.bionime.exception.RecordNotFoundException;
+import com.bionime.json.ServiceSite;
+import com.bionime.json.StaffList;
 
 @Controller
 public class bionimeController {
@@ -65,20 +70,14 @@ public class bionimeController {
 	
 	@GetMapping("/bionimeViewSite/{id}")
 	public String bionimeViewSite(@PathVariable int id, Model model) throws RecordNotFoundException {
-		
-		
-		System.out.println("bionimeController: " + id);
-		System.out.println("bionimeViewSite ID: " + id);
-
-		
-		
 		Optional<SiteEntity> site = siteService.getSiteById(id);
-		System.out.println("bionimeViewSite site: " + site);
-		System.out.println("bionimeViewSite site: " + site.get().getName());
-
+		Gson gson = new Gson(); 
+		List<StaffList> staffList = gson.fromJson(site.get().getStaffList(), new TypeToken<List<StaffList>>() {
+		}.getType());
 		
+  
 		model.addAttribute("siteName", site.get().getName());
-		model.addAttribute("staffs", staffService.getAllStaff());
+		model.addAttribute("staffList", staffList);
 		return "bionimeViewSite";
 	}
 
