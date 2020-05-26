@@ -55,6 +55,12 @@ public class bionimeController {
 		model.addAttribute("sites", siteService.getAllSite());
 		return "bionimeAddStaff";
 	}
+	
+	@GetMapping("/bionimeListStaff")
+	public String bionimeListStaff(Model model) {
+		model.addAttribute("staffs", staffService.getAllStaff());
+		return "bionimeListStaff";
+	}
 
 	@DeleteMapping("/deleteSite/{id}")
 	public ResponseEntity<String> deleteSite(@PathVariable int id) throws RecordNotFoundException {
