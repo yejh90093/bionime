@@ -92,11 +92,22 @@ function ajaxPostAddStaff() {
 	// PREPARE FORM DATA
 	var formData = {
 			id : $("#addStaffID").val(),
-			name : $("#addStaffName").val(),
-			serviceSite : String($('#my-select').val())
+			name : $("#addStaffName").val()
 	}
 	
+	var serviceSite = [];	
 	
+	$('#my-select').val().forEach(function(item){		
+		serviceSite.push({ 
+	        "name" : item,
+	        "date" : Date.now()
+	    });
+	});
+	
+	 
+	formData["serviceSite"] = JSON.stringify(serviceSite);
+	console.log( JSON.stringify(serviceSite));
+
 	console.log( JSON.stringify(formData));
 
 	// DO POST
@@ -128,5 +139,5 @@ function resetSiteName() {
 function resetStffInput() {
 	$("#addStaffID").val("");
 	$("#addStaffName").val("");
-	$("#my-select").val("");
+	$("#my-select").multiSelect('deselect_all');
 }

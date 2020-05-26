@@ -27,6 +27,8 @@ public class SiteEntity {
     @Column(name="STAFF_COUNT")
     private int staffCount;
      
+    @Column(name="STAFF_List")
+    private String staffList;
      
     @Column(name="LAST_UPDATE")
     private Timestamp lastUpdate;
@@ -38,6 +40,7 @@ public class SiteEntity {
     public SiteEntity() {
      
 		this.lastUpdate = new Timestamp(System.currentTimeMillis());
+		this.staffList = "[]";
 
     }
 
@@ -70,6 +73,14 @@ public class SiteEntity {
 
 	public void setStaffCount(int staffCount) {
 		this.staffCount = staffCount;
+	}
+	
+	public String getStaffList() {
+		return staffList;
+	}
+
+	public void setStaffList(String staffList) {
+		this.staffList = staffList;
 	}
 
 	public Timestamp getLastUpdate() {

@@ -2,6 +2,7 @@ package com.bionime.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -61,6 +62,25 @@ public class bionimeController {
 		model.addAttribute("staffs", staffService.getAllStaff());
 		return "bionimeListStaff";
 	}
+	
+	@GetMapping("/bionimeViewSite/{id}")
+	public String bionimeViewSite(@PathVariable int id, Model model) throws RecordNotFoundException {
+		
+		
+		System.out.println("bionimeController: " + id);
+		System.out.println("bionimeViewSite ID: " + id);
+
+		
+		
+		Optional<SiteEntity> site = siteService.getSiteById(id);
+		System.out.println("bionimeViewSite site: " + site);
+		System.out.println("bionimeViewSite site: " + site.get().getName());
+
+		
+		model.addAttribute("siteName", site.get().getName());
+		model.addAttribute("staffs", staffService.getAllStaff());
+		return "bionimeViewSite";
+	}
 
 	@DeleteMapping("/deleteSite/{id}")
 	public ResponseEntity<String> deleteSite(@PathVariable int id) throws RecordNotFoundException {
@@ -81,8 +101,8 @@ public class bionimeController {
 	@PostMapping("/addSite")
 	public ResponseEntity<Map<String, Object>> createSite(@RequestBody SiteEntity site) throws RecordNotFoundException {
 
-		System.out.println("bionimeController: " + site);
-		System.out.println("createOrUpdateEmployee: " + site);
+		System.out.println("@@@ Andy Debug bionimeController: " + site);
+		System.out.println("@@@ Andy Debug createOrUpdateEmployee: " + site);
 
 		Map<String, Object> updated = siteService.createSite(site);
 		return new ResponseEntity<Map<String, Object>>(updated, new HttpHeaders(), HttpStatus.OK);
@@ -92,8 +112,8 @@ public class bionimeController {
 	public ResponseEntity<Map<String, Object>> createStaff(@RequestBody StaffEntity staff)
 			throws RecordNotFoundException {
 
-		System.out.println("bionimeController: " + staff);
-		System.out.println("createStaff: " + staff);
+		System.out.println("@@@ Andy Debug bionimeController: " + staff);
+		System.out.println("@@@ Andy Debug createStaff: " + staff);
 
 		Map<String, Object> updated = staffService.createStaff(staff);
 		return new ResponseEntity<Map<String, Object>>(updated, new HttpHeaders(), HttpStatus.OK);

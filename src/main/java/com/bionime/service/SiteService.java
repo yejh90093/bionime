@@ -99,4 +99,14 @@ public class SiteService {
 		}
 	}
 
+	public Optional<SiteEntity> getSiteById(int id) throws RecordNotFoundException {
+		Optional<SiteEntity> site = repository.findById(id);
+
+		if (site.isPresent()) {
+			return site;
+		} else {
+			throw new RecordNotFoundException("No site record exist for given id");
+		}
+	}
+	
 }

@@ -6,40 +6,43 @@
 </head>
 
 <!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="css/bionime.css">
+<link rel="stylesheet" type="text/css" href="../css/bionime.css">
 <!--===============================================================================================-->
-<link rel="stylesheet" type="text/css" href="vendor/lou-multi-select/css/multi-select.css">
+<link rel="stylesheet" type="text/css" href="../vendor/lou-multi-select/css/multi-select.css">
 <!--===============================================================================================-->
 
 <div class="sidenav">
-  <a href="bionimeAddSite">新增站點</a>
-  <a href="bionimeListSite">站點列表</a>
-  <a href="bionimeAddStaff">新增護士</a>
-  <a href="bionimeListStaff">護士列表</a>
+  <a href="../bionimeAddSite">新增站點</a>
+  <a href="../bionimeListSite">站點列表</a>
+  <a href="../bionimeAddStaff">新增護士</a>
+  <a href="../bionimeListStaff">護士列表</a>
 </div>
 
 <div class="main">
 
- <h3>Site List</h3>
+ <label for="viewSiteName">站點名稱:</label><br>
+ <label th:text="${siteName}"></label>
+
+ <h3>Staff List</h3>
  <br />
 
 <table>
 	<thead>
 		<tr>
-			<th> SiteName </th>
+			<th> StaffName </th>
 			<th> LastUpdate </th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr th:if="${sites.empty}">
-			<td colspan="2"> No Sites Available </td>
+		<tr th:if="${staffs.empty}">
+			<td colspan="2"> No Staffs Available </td>
 		</tr>
-		<tr th:each="site : ${sites}">
-			<td><span th:text="${site.name}"> Name </span></td>
-			<td><span th:text="${site.lastUpdate}"> Last Update </span></td>
+		<tr th:each="staff : ${staffs}">
+			<td><span th:text="${staff.name}"> ID </span></td>
+			<td><span th:text="${staff.lastUpdate}"> Last Update </span></td>
 			<td>
-				<a th:href="@{'bionimeViewSite/'+${site.id}}" style="display:block;">View</a> 
-				<a href="#" th:onclick="@{'deleteSite('+${site.id}+')'}" style="display:block;">delete</a>
+				<a th:href="..." style="display:block;">View</a> 
+				<a href="#" th:onclick="@{'deleteStaff('+${staff.id}+')'}" style="display:block;">delete</a>
 			</td>
 		</tr>
 	</tbody>
@@ -48,11 +51,11 @@
 </div>
    
 <!--===============================================================================================-->
-	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script src="../vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
-	<script src="vendor/lou-multi-select/js/jquery.multi-select.js"></script>
+	<script src="../vendor/lou-multi-select/js/jquery.multi-select.js"></script>
 <!--===============================================================================================-->
-    <script type="text/javascript" src="js/bionime.js"></script>
+    <script type="../text/javascript" src="js/bionime.js"></script>
 <!--===============================================================================================-->
    
 </html>
