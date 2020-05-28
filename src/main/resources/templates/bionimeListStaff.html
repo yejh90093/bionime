@@ -20,10 +20,9 @@
 
 <div class="main">
 
- <h3>Staff List</h3>
- <br />
+ <h3>護士列表</h3>
 
-<table>
+<table id="staffList">
 	<thead>
 	</thead>
 	<tbody>
@@ -31,13 +30,14 @@
 			<td colspan="2"> No Staffs Available </td>
 		</tr>
 		<tr th:unless="${staffs.empty}">
-			<th> SiteName </th>
-			<th> LastUpdate </th>
+			<th> 護士ID </th>
+			<th> 更新時間 </th>
+			<th> 功能操作 </th>
 		</tr>
 		
 		<tr th:each="staff : ${staffs}">
 			<td><span th:text="${staff.name}"> ID </span></td>
-			<td><span th:text="${staff.lastUpdate}"> Last Update </span></td>
+			<td><span th:text="${staff.lastUpdate}"> 更新時間 </span></td>
 			<td>
 				<a th:href="@{'bionimeViewStaff/'+${staff.id}}"  style="display:block;">View</a> 
 				<a href="#" th:onclick="@{'deleteStaff('+${staff.id}+')'}" style="display:block;">delete</a>

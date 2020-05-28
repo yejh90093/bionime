@@ -38,8 +38,85 @@ body {
   .sidenav a {font-size: 18px;}
 } 
 
+
+
+
+
 .custom-header{
 	font-size: 14px;
     color: #fff;
     background: #000;
+}
+
+#siteList {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#siteList td, #siteList th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#siteList tr:nth-child(even){background-color: #f2f2f2;}
+
+#siteList tr:hover {background-color: #ddd;}
+
+#siteList th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+
+
+
+#staffList {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#staffList td, #staffList th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#staffList tr:nth-child(even){background-color: #f2f2f2;}
+
+#staffList tr:hover {background-color: #ddd;}
+
+#staffList th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
+
+
+input[type=button], input[type=submit], input[type=reset] {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+input[type=text] {
+  border: 2px solid red;
+  font-size: 28px; 
+  border-radius: 4px;
+}
+
+
+br {
+  margin: 2em;
+  display: block;
+  font-size: 24%;
 }

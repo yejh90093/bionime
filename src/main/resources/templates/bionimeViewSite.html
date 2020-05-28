@@ -19,26 +19,27 @@
 </div>
 
 <div class="main">
+  <h3>站點資訊</h3>
+  <label for="viewSiteName">站點名稱:</label>
+  <label th:text="${siteName}" style="color: blue;"></label>
+  <br/>
+  <label for="viewSiteName">站點護士:</label>
 
- <label for="viewSiteName">站點名稱:</label><br>
- <label th:text="${siteName}"></label>
- <br />
-
-<table>
+<table id="staffList">
 	<thead>
 	</thead>
 	<tbody>
 		<tr th:if="${staffList.empty}">
-			<td colspan="2"> No Staffs Available </td>
+			<td colspan="2"> 無站點護士資料 </td>
 		</tr>
  		<tr th:unless="${staffList.empty}">
-			<th> SiteName </th>
-			<th> LastUpdate </th>
+			<th> 姓名 </th>
+			<th> 更新時間 </th>
 		</tr>
 				
 		<tr th:each="staff : ${staffList}">
 			<td><span th:text="${staff.name}"> ID </span></td>
-			<td><span th:text="${#dates.format(staff.date, 'yyyy-MM-dd HH:mm')}"> Last Update </span></td>
+			<td><span th:text="${#dates.format(staff.date, 'yyyy-MM-dd HH:mm')}"> 更新時間 </span></td>
 		</tr>
 	</tbody>
 </table>

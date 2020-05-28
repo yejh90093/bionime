@@ -20,24 +20,24 @@
 
 <div class="main">
 
- <h3>Site List</h3>
- <br />
+ <h3>站點列表</h3>
 
-<table>
+<table id="siteList">
 	<thead>
 	</thead>
 	<tbody>
 		<tr th:if="${sites.empty}">
-			<td colspan="2"> No Sites Available </td>
+			<td colspan="2">  </td>
 		</tr>
  		<tr th:unless="${sites.empty}">
-			<th> SiteName </th>
-			<th> LastUpdate </th>
+			<th> 站點名稱 </th>
+			<th> 更新時間 </th>
+			<th> 功能操作 </th>
 		</tr>
 		
 		<tr th:each="site : ${sites}">
-			<td><span th:text="${site.name}"> Name </span></td>
-			<td><span th:text="${site.lastUpdate}"> Last Update </span></td>
+			<td><span th:text="${site.name}"> 站點名稱 </span></td>
+			<td><span th:text="${site.lastUpdate}"> 更新時間 </span></td>
 			<td>
 				<a th:href="@{'bionimeViewSite/'+${site.id}}" style="display:block;">View</a> 
 				<a href="#" th:onclick="@{'deleteSite('+${site.id}+')'}" style="display:block;">delete</a>

@@ -19,19 +19,21 @@
 </div>
 
 <div class="main">
+  <h3>新增護士</h3>
 
-  <label for="fname">新增護士資料:</label><br>
-  <input type="text" id="addStaffID" name="addStaffID"  style="background-color:#cceeff;" placeholder="new staff ID...">
-  <input type="text" id="addStaffName" name="addStaffName"  style="background-color:#cceeff;" placeholder="new staff name..."> 
+  <label for="fname">ID:</label><br>
+  <input type="text" id="addStaffID" name="addStaffID" placeholder="new staff ID..."><br>
+  <label for="fname">姓名:</label><br>
+  <input type="text" id="addStaffName" name="addStaffName" placeholder="new staff name..."><br>
   <br> 
   <select multiple="multiple" id="my-select" name="my-select[]">
 		<option th:each="site : ${sites}" th:value="${site.name}"
 			th:text="${site.name}"></option>
   </select> 
-  <br> 
-  <label id="addStaffResult" for="fname"></label>
   <br>
   <input type="submit" id="addStaffSubmit"  value="Submit"> 
+  <br> 
+  <label id="addStaffResult" for="fname"></label>
 
 </div>
    
