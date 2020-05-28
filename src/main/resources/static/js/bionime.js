@@ -38,10 +38,17 @@ $("#addSiteName").focus(function() {
 	$("#addSiteResult").html("");
 });
 
-$('#my-select').multiSelect({
-	selectableHeader : "<div class='custom-header'>Available sites</div>",
-	selectionHeader : "<div class='custom-header'>Assign to site</div>"
-})
+
+
+
+$( document ).ready(function() {
+    console.log( "ready!" );
+    $('#my-select').multiSelect({
+    	selectableHeader : "<div class='custom-header'>Available sites</div>",
+    	selectionHeader : "<div class='custom-header'>Assign to site</div>"
+    })
+});
+
 
 function deleteSite(id) {
 	$.ajax({

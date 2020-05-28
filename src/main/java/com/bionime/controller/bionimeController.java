@@ -81,6 +81,47 @@ public class bionimeController {
 		return "bionimeViewSite";
 	}
 
+	@GetMapping("/bionimeViewStaff/{id}")
+	public String bionimeViewStaff(@PathVariable String id, Model model) throws RecordNotFoundException {
+		
+		System.out.println("@@@ Andy Debug bionimeViewStaff: " + id);
+		Gson gson = new Gson();
+		Optional<StaffEntity> staff = staffService.getStaffByName(id);
+		
+		List<ServiceSite> resultServiceSite = new ArrayList<>();
+		List<SiteEntity> allSite = siteService.getAllSite();
+		List<ServiceSite> ServiceSite = gson.fromJson(staff.get().getServiceSite(), new TypeToken<List<ServiceSite>>() {
+		}.getType());
+
+		
+		for(SiteEntity site : allSite) {
+			System.out.println("@@@ Andy Debug allSite: " +site);
+			
+			
+			boolean assigned = false;
+			for(ServiceSite temp : ServiceSite) {	 
+				if(temp.getName().equals(site.getName())) {
+					assigned= true;
+				}
+		
+			}
+			
+			resultServiceSite.add(new ServiceSite(site.getName(), assigned));
+		}
+		
+		
+		System.out.println("@@@ Andy Debug bionimeViewStaff: " + staff.get());
+
+		
+		
+		
+  
+		model.addAttribute("staff", staff.get());
+		model.addAttribute("serviceSite", resultServiceSite);
+		return "bionimeViewStaff";
+	}
+
+	
 	@DeleteMapping("/deleteSite/{id}")
 	public ResponseEntity<String> deleteSite(@PathVariable int id) throws RecordNotFoundException {
 

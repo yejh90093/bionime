@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Bionime system</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css" href="../css/bionime.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" type="text/css"
+	href="../vendor/lou-multi-select/css/multi-select.css">
+<!--===============================================================================================-->
+
+<div class="sidenav">
+	<a href="../bionimeAddSite">新增站點</a> <a href="../bionimeListSite">站點列表</a>
+	<a href="../bionimeAddStaff">新增護士</a> <a href="../bionimeListStaff">護士列表</a>
+</div>
+
+<div class="main">
+
+	<label for="viewSiteName">站點名稱:</label><br> <label
+		th:text="${staff.name}"></label> <br />
+
+	<table>
+		<thead>
+		</thead>
+		<tbody>
+			<tr th:if="${serviceSite.empty}">
+				<td colspan="2">No Staffs Available</td>
+			</tr>
+			<tr th:unless="${serviceSite.empty}">
+				<th>SiteName</th>
+				<th>LastUpdate</th>
+			</tr>
+
+			<tr th:each="staff : ${serviceSite}">
+				<td><span th:text="${staff.name}"> ID </span></td>
+				<td><span
+					th:text="${#dates.format(staff.date, 'yyyy-MM-dd HH:mm')}">
+						Last Update </span></td>
+			</tr>
+		</tbody>
+	</table>
+
+	<br> 
+	
+	<select multiple="multiple" id="my-select" name="my-select[]">
+		<option th:each="site : ${serviceSite}" th:value="${site.assigned}"
+			th:selected="${site.assigned}" th:text="${site.name}"></option>
+	</select> <br>
+
+
+</div>
+
+<!--===============================================================================================-->
+<script src="../vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+<script src="../vendor/lou-multi-select/js/jquery.multi-select.js"></script>
+<!--===============================================================================================-->
+<script type="text/javascript" src="../js/bionime.js"></script>
+<!--===============================================================================================-->
+
+</html>

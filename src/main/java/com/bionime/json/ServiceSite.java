@@ -4,8 +4,13 @@ public class ServiceSite {
 	
     private long date;
     private String name;
+    private boolean assigned;
      
-    public long getDate() {
+    public ServiceSite(String name, boolean assigned) {
+        this.name = name;
+        this.assigned = assigned;
+	}
+	public long getDate() {
         return date;
     }
     public void setDate(long date) {
@@ -18,8 +23,14 @@ public class ServiceSite {
         this.name = name;
     }
  
+    public boolean getAssigned() {
+        return assigned;
+    }
+    public void setAssigned(boolean assigned) {
+        this.assigned = assigned;
+    }
     @Override
     public String toString() {
-        return "User [date=" + date + ", name=" + name + "]";
+        return "User [date=" + date + ", name=" + name + ", assigned=" + assigned + "]";
     }
 }
