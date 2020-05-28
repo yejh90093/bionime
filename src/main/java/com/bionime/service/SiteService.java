@@ -73,6 +73,7 @@ public class SiteService {
 		Optional<SiteEntity> site = repository.findById(id);
 
 		if (site.isPresent()) {
+			
 			repository.deleteById(id);
 			return true;
 		} else {

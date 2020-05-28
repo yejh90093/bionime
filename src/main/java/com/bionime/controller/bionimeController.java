@@ -110,10 +110,13 @@ public class bionimeController {
 
 	@DeleteMapping("/deleteSite/{id}")
 	public ResponseEntity<String> deleteSite(@PathVariable int id) throws RecordNotFoundException {
+		String siteName = siteService.getSiteById(id).get().getName();
 		Boolean isRemoved = siteService.deleteSiteById(id);
 		if (!isRemoved) {
 			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 		}
+		
+		staffService.delsteSiteFromStaff(siteName);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	

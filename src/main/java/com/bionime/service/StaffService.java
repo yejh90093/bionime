@@ -143,6 +143,29 @@ public class StaffService {
 		}
 	}
 
+	public void delsteSiteFromStaff(String siteName) throws RecordNotFoundException {
+			
+		List<StaffEntity> staffList = staffRepository.findAll();
+		Gson gson = new Gson();
+		
+		for(StaffEntity staff : staffList) {
+			ServiceSiteLogObj[] siteArray = gson.fromJson(staff.getServiceSite(), ServiceSiteLogObj[].class);
+			List<ServiceSiteLogObj> oldServiceSite = gson.fromJson(staff.getServiceSite(),
+					new TypeToken<List<ServiceSiteLogObj>>() {
+					}.getType());
+			Iterator<ServiceSiteLogObj> it = oldServiceSite.iterator();
+			while (it.hasNext()) {
+				if (it.next().getName().equals(siteName)) {
+					it.remove();
+				}
+			}
+			String newServiceSite = gson.toJson(oldServiceSite);
+			
+			staff.setServiceSite(newServiceSite);
+			staffRepository.save(staff);
+		}
+	}
+	
 	public Boolean deleteStaffById(String id) throws RecordNotFoundException {
 		Optional<StaffEntity> staff = staffRepository.findById(id);
 
