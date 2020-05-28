@@ -11,9 +11,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan({"com.bionime.demo","com.bionime.entity","com.bionime.controller","com.bionime.service","com.bionime.exception","com.bionime.repository"})
 @EnableJpaRepositories("com.bionime.repository")
 public class BionimeApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(BionimeApplication.class, args);
 	}
-
 }

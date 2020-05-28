@@ -41,10 +41,9 @@ public class StaffEntity {
 	}
 
 	public StaffEntity(String name, String id, String serviceSite) {
-		
+
 		System.out.println("@@@ Andy Debug StaffEntity: " + serviceSite);
 
-		
 		this.id = id;
 		this.name = name;
 		this.serviceSite = serviceSite;

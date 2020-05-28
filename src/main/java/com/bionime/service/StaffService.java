@@ -34,8 +34,6 @@ public class StaffService {
 	public List<StaffEntity> getAllStaff() {
 		List<StaffEntity> staffList = staffRepository.findAll();
 
-		System.out.println("@@@ Andy Deubg:  getAllStaff: " + staffList.size());
-
 		if (staffList.size() > 0) {
 			return staffList;
 		} else {
@@ -47,29 +45,20 @@ public class StaffService {
 		Map<String, Object> data = new HashMap<>();
 		Optional<StaffEntity> staff = staffRepository.findByName(entity.getName());
 
-		System.out.println("@@@ Andy Deubg: createStaff: " + staff.isPresent());
-
 		if (staff.isPresent()) {
 			data.put("Result", "StaffEntity already exist");
-
 			StaffEntity newEntity = staff.get();
 			newEntity.setId(entity.getId());
 			newEntity.setName(entity.getName());
 			newEntity.setServiceSite(entity.getServiceSite());
 			newEntity.setLastUpdate(entity.getLastUpdate());
 			newEntity = staffRepository.save(newEntity);
-
 			data.put("StaffEntity", newEntity);
 			return data;
 		} else {
 			data.put("Result", "Sucess to Create Staff");
-			
 			entity = staffRepository.save(entity);
-
-			
 			addStaffToSite(entity);
-			
-			
 			data.put("StaffEntity", entity);
 			return data;
 		}
@@ -78,51 +67,39 @@ public class StaffService {
 	public Map<String, Object> updateStaff(StaffEntity entity) throws RecordNotFoundException {
 		Optional<StaffEntity> staff = staffRepository.findByName(entity.getName());
 
-		System.out.println("@@@ Andy Deubg: updateStaff AAA: " + staff.get().getServiceSite());
-		System.out.println("@@@ Andy Deubg: updateStaff BBB: " + entity.getServiceSite());
+		Gson gson = new Gson();
+		List<ServiceSiteLogObj> oldServiceSite = gson.fromJson(staff.get().getServiceSite(),
+				new TypeToken<List<ServiceSiteLogObj>>() {
+				}.getType());
 
-		
-		Gson gson = new Gson(); 
-		List<ServiceSiteLogObj> oldServiceSite = gson.fromJson(staff.get().getServiceSite(), new TypeToken<List<ServiceSiteLogObj>>() {
-		}.getType());
+		List<ServiceSiteLogObj> newServiceSite = gson.fromJson(entity.getServiceSite(),
+				new TypeToken<List<ServiceSiteLogObj>>() {
+				}.getType());
 
-		List<ServiceSiteLogObj> newServiceSite = gson.fromJson(entity.getServiceSite(), new TypeToken<List<ServiceSiteLogObj>>() {
-		}.getType());
-
-		for(ServiceSiteLogObj newSite : newServiceSite) {
+		for (ServiceSiteLogObj newSite : newServiceSite) {
 			ServiceSiteLogObj existSite = oldServiceSite.stream()
-					.filter(oldSite -> newSite.getName().equals(oldSite.getName()))
-					.findAny().orElse(null);
-			
-			if(existSite != null) {
+					.filter(oldSite -> newSite.getName().equals(oldSite.getName())).findAny().orElse(null);
+
+			if (existSite != null) {
 				newSite.setDate(existSite.getDate());
-			}						
-			System.out.println("@@@ Andy Deubg: newSite b: " + newSite);
+			}
 		}
-		
-		
+
 		delsteStaffFromSite(staff.get());
 		String newSiteListStr = gson.toJson(newServiceSite);
 		entity.setServiceSite(newSiteListStr);
 		addStaffToSite(entity);
-		
+
 		staff.get().setServiceSite(newSiteListStr);
 		staff.get().setLastUpdate(new Timestamp(System.currentTimeMillis()));
-		System.out.println("@@@ Andy Deubg: newSitestaffRepository.save : " + staff);
 
 		staffRepository.save(staff.get());
-		
-		
 		Map<String, Object> data = new HashMap<>();
 		data.put("Result", "Sucess to updateStaff Staff");
 		return data;
 	}
 
-	
 	public void addStaffToSite(StaffEntity entity) throws RecordNotFoundException {
-
-		
-		System.out.println("@@@ Andy Deubg: addStaffToSite: " +entity.getServiceSite());
 
 		String jsonString = entity.getServiceSite();
 		Gson gson = new Gson();
@@ -130,7 +107,6 @@ public class StaffService {
 
 		for (ServiceSiteLogObj site : siteArray) {
 			Optional<SiteEntity> siteEntity = siteRepository.findByName(site.getName());
-			System.out.println("@@@@@ siteArray: " + siteEntity.get().getId());
 			siteEntity.get().setStaffCount(siteEntity.get().getStaffCount() + 1);
 			List<StaffLogObj> staffList = gson.fromJson(siteEntity.get().getStaffList(),
 					new TypeToken<List<StaffLogObj>>() {
@@ -139,29 +115,21 @@ public class StaffService {
 			staffList.add(newSatffList);
 			String strStaffList = gson.toJson(staffList);
 			siteEntity.get().setStaffList(strStaffList);
-			
-			System.out.println("@@@ Andy Deubg: addStaffToSite: " +siteEntity.get());
-
 			siteRepository.save(siteEntity.get());
 		}
 	}
 
 	public void delsteStaffFromSite(StaffEntity entity) throws RecordNotFoundException {
-		
-		System.out.println("@@@ Andy Deubg: delsteStaffFromSite: " +entity);
+		String jsonString = entity.getServiceSite();
+		Gson gson = new Gson();
+		ServiceSiteLogObj[] siteArray = gson.fromJson(jsonString, ServiceSiteLogObj[].class);
 
-		
-		
-		String jsonString = entity.getServiceSite() ; 
-		Gson gson = new Gson(); 
-		ServiceSiteLogObj[] siteArray = gson.fromJson(jsonString, ServiceSiteLogObj[].class);  
-		 
-		for(ServiceSiteLogObj site : siteArray) {
-			
+		for (ServiceSiteLogObj site : siteArray) {
 			Optional<SiteEntity> siteEntity = siteRepository.findByName(site.getName());
-			siteEntity.get().setStaffCount(siteEntity.get().getStaffCount()-1);
-			List<StaffLogObj> oldStaffList = gson.fromJson(siteEntity.get().getStaffList(), new TypeToken<List<StaffLogObj>>() {
-			}.getType());
+			siteEntity.get().setStaffCount(siteEntity.get().getStaffCount() - 1);
+			List<StaffLogObj> oldStaffList = gson.fromJson(siteEntity.get().getStaffList(),
+					new TypeToken<List<StaffLogObj>>() {
+					}.getType());
 			StaffLogObj newSatffList = new StaffLogObj(entity.getName(), site.getDate());
 			Iterator<StaffLogObj> it = oldStaffList.iterator();
 			while (it.hasNext()) {
@@ -169,16 +137,12 @@ public class StaffService {
 					it.remove();
 				}
 			}
-			System.out.println("@@@ Andy Deubg: delsteStaffFromSite oldStaffList: " +oldStaffList);
 			String strStaffList = gson.toJson(oldStaffList);
-		    siteEntity.get().setStaffList(strStaffList);
-		    siteRepository.save(siteEntity.get());
-		}	
+			siteEntity.get().setStaffList(strStaffList);
+			siteRepository.save(siteEntity.get());
+		}
 	}
-	
-	
-	
-	
+
 	public Boolean deleteStaffById(int id) throws RecordNotFoundException {
 		Optional<StaffEntity> staff = staffRepository.findById(id);
 
@@ -191,9 +155,6 @@ public class StaffService {
 		}
 	}
 
-	
-	
-	
 	public Optional<StaffEntity> getStaffByName(String name) throws RecordNotFoundException {
 		Optional<StaffEntity> staff = staffRepository.findByName(name);
 

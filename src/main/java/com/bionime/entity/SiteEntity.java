@@ -12,46 +12,46 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
- 
+
 @Entity
-@Table(name="bionime_Site")
+@Table(name = "bionime_Site")
 public class SiteEntity {
- 
+
 	@Id
-    @GeneratedValue
-    private int id;
-     
-    @Column(name="NAME")
-    private String name;
-     
-    @Column(name="STAFF_COUNT")
-    private int staffCount;
-     
-    @Column(name="STAFF_List")
-    private String staffList;
-     
-    @Column(name="LAST_UPDATE")
-    private Timestamp lastUpdate;
+	@GeneratedValue
+	private int id;
 
-    @CreationTimestamp
-    @Column(name="CREATE_DATE")
-    private Timestamp createDate;
+	@Column(name = "NAME")
+	private String name;
 
-    public SiteEntity() {
-     
+	@Column(name = "STAFF_COUNT")
+	private int staffCount;
+
+	@Column(name = "STAFF_List")
+	private String staffList;
+
+	@Column(name = "LAST_UPDATE")
+	private Timestamp lastUpdate;
+
+	@CreationTimestamp
+	@Column(name = "CREATE_DATE")
+	private Timestamp createDate;
+
+	public SiteEntity() {
+
 		this.lastUpdate = new Timestamp(System.currentTimeMillis());
 		this.staffList = "[]";
 
-    }
+	}
 
-    public SiteEntity(String name) {
+	public SiteEntity(String name) {
 		this.name = name;
 		this.name = name;
-    }
+	}
 
-    //Setters and getters
- 
-    public int getId() {
+	// Setters and getters
+
+	public int getId() {
 		return id;
 	}
 
@@ -74,7 +74,7 @@ public class SiteEntity {
 	public void setStaffCount(int staffCount) {
 		this.staffCount = staffCount;
 	}
-	
+
 	public String getStaffList() {
 		return staffList;
 	}
@@ -100,8 +100,8 @@ public class SiteEntity {
 	}
 
 	@Override
-    public String toString() {
-        return "SiteEntity [id=" + id + ", name=" + name + 
-                ", staffCount=" + staffCount + ", lastUpdate=" + lastUpdate   + "]";
-    }
+	public String toString() {
+		return "SiteEntity [id=" + id + ", name=" + name + ", staffCount=" + staffCount + ", lastUpdate=" + lastUpdate
+				+ "]";
+	}
 }
