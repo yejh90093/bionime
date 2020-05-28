@@ -1,12 +1,12 @@
 package com.bionime.json;
 
-public class ServiceSite {
+public class ServiceSiteLogObj {
 	
     private long date;
     private String name;
     private boolean assigned;
      
-    public ServiceSite(String name, boolean assigned) {
+    public ServiceSiteLogObj(String name, boolean assigned) {
         this.name = name;
         this.assigned = assigned;
 	}
@@ -31,6 +31,6 @@ public class ServiceSite {
     }
     @Override
     public String toString() {
-        return "User [date=" + date + ", name=" + name + ", assigned=" + assigned + "]";
+        return "Site [date=" + date + ", name=" + name + ", assigned=" + assigned + "]";
     }
 }

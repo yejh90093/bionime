@@ -25,13 +25,18 @@ $("#addStaffSubmit").click(function() {
 		ajaxPostAddStaff();
 	}
 	
-	//if (newSiteName == "") {
-	//	$("#addSiteName").attr("placeholder", "Assign a new site name here");
-	//} else {
-	//	event.preventDefault();
-	//	ajaxPost();
-	//}
 });
+
+
+$("#modifyStaffSubmit").click(function() {
+	
+	var newStaffName = $("#viewStaffName").val();
+	var values = $('#my-select').val();
+	
+		event.preventDefault();
+		ajaxPostModifyStaff();  
+});
+
 
 
 $("#addSiteName").focus(function() {
@@ -44,6 +49,11 @@ $("#addSiteName").focus(function() {
 $( document ).ready(function() {
     console.log( "ready!" );
     $('#my-select').multiSelect({
+    	selectableHeader : "<div class='custom-header'>Available sites</div>",
+    	selectionHeader : "<div class='custom-header'>Assign to site</div>"
+    })
+    
+    $('#modifySelect').multiSelect({
     	selectableHeader : "<div class='custom-header'>Available sites</div>",
     	selectionHeader : "<div class='custom-header'>Assign to site</div>"
     })
@@ -136,14 +146,55 @@ function ajaxPostAddStaff() {
 	});
 
 	// Reset FormData after Posting
-	resetStffInput();
+	resetStaffInput();
+}
+
+function ajaxPostModifyStaff() {
+
+	// PREPARE FORM DATA
+	var formData = {
+			name : $("#viewStaffName").text()
+	}
+	
+	var serviceSite = [];	
+	
+	$('#modifySelect').val().forEach(function(item){		
+		serviceSite.push({ 
+	        "name" : item,
+	        "date" : Date.now()
+	    });
+	});
+	
+	 
+	formData["serviceSite"] = JSON.stringify(serviceSite);
+	console.log( JSON.stringify(serviceSite));
+
+	console.log( JSON.stringify(formData));
+
+	// DO POST
+	$.ajax({
+		type : "POST",
+		contentType : "application/json",
+		url : "/bionime/modifyStaff",
+		data : JSON.stringify(formData),
+		dataType : 'json',
+		success : function(result) {
+			console.log(result.Result);
+			$("#modifyStaffResult").html(result.Result);
+
+		},
+		error : function(e) {
+			alert("Error!")
+			console.log("ERROR: ", e);
+		}
+	});
 }
 
 function resetSiteName() {
 	$("#addSiteName").val("");
 }
 
-function resetStffInput() {
+function resetStaffInput() {
 	$("#addStaffID").val("");
 	$("#addStaffName").val("");
 	$("#my-select").multiSelect('deselect_all');

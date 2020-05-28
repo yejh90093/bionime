@@ -28,8 +28,8 @@ import com.bionime.repository.SiteRepository;
 import com.bionime.entity.SiteEntity;
 import com.bionime.entity.StaffEntity;
 import com.bionime.exception.RecordNotFoundException;
-import com.bionime.json.ServiceSite;
-import com.bionime.json.StaffList;
+import com.bionime.json.ServiceSiteLogObj;
+import com.bionime.json.StaffLogObj;
 
 @Controller
 public class bionimeController {
@@ -72,7 +72,7 @@ public class bionimeController {
 	public String bionimeViewSite(@PathVariable int id, Model model) throws RecordNotFoundException {
 		Optional<SiteEntity> site = siteService.getSiteById(id);
 		Gson gson = new Gson(); 
-		List<StaffList> staffList = gson.fromJson(site.get().getStaffList(), new TypeToken<List<StaffList>>() {
+		List<StaffLogObj> staffList = gson.fromJson(site.get().getStaffList(), new TypeToken<List<StaffLogObj>>() {
 		}.getType());
 		
   
@@ -88,9 +88,9 @@ public class bionimeController {
 		Gson gson = new Gson();
 		Optional<StaffEntity> staff = staffService.getStaffByName(id);
 		
-		List<ServiceSite> resultServiceSite = new ArrayList<>();
+		List<ServiceSiteLogObj> resultServiceSite = new ArrayList<>();
 		List<SiteEntity> allSite = siteService.getAllSite();
-		List<ServiceSite> ServiceSite = gson.fromJson(staff.get().getServiceSite(), new TypeToken<List<ServiceSite>>() {
+		List<ServiceSiteLogObj> ServiceSite = gson.fromJson(staff.get().getServiceSite(), new TypeToken<List<ServiceSiteLogObj>>() {
 		}.getType());
 
 		
@@ -99,14 +99,14 @@ public class bionimeController {
 			
 			
 			boolean assigned = false;
-			for(ServiceSite temp : ServiceSite) {	 
+			for(ServiceSiteLogObj temp : ServiceSite) {	 
 				if(temp.getName().equals(site.getName())) {
 					assigned= true;
 				}
 		
 			}
 			
-			resultServiceSite.add(new ServiceSite(site.getName(), assigned));
+			resultServiceSite.add(new ServiceSiteLogObj(site.getName(), assigned));
 		}
 		
 		
@@ -158,4 +158,26 @@ public class bionimeController {
 		Map<String, Object> updated = staffService.createStaff(staff);
 		return new ResponseEntity<Map<String, Object>>(updated, new HttpHeaders(), HttpStatus.OK);
 	}
+	
+	
+	
+	
+	
+	
+	
+	@PostMapping("/modifyStaff")
+	public ResponseEntity<Map<String, Object>> updateStaff(@RequestBody StaffEntity staff)
+			throws RecordNotFoundException {
+
+		System.out.println("@@@ Andy Debug bionimeController: " + staff);
+		System.out.println("@@@ Andy Debug updateStaff: " + staff);
+
+		Map<String, Object> updated = staffService.updateStaff(staff);
+		
+		return new ResponseEntity<Map<String, Object>>(updated, new HttpHeaders(), HttpStatus.OK);
+	}
+	
+	
+	
+	
 }
