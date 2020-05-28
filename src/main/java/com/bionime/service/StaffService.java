@@ -161,6 +161,17 @@ public class StaffService {
 		if (staff.isPresent()) {
 			return staff;
 		} else {
+			throw new RecordNotFoundException("No site record exist for given name");
+		}
+	}
+
+	public Optional<StaffEntity> getStaffById(String id) throws RecordNotFoundException {
+
+		Optional<StaffEntity> staff = staffRepository.findById(id);
+
+		if (staff.isPresent()) {
+			return staff;
+		} else {
 			throw new RecordNotFoundException("No site record exist for given id");
 		}
 	}

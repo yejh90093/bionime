@@ -84,7 +84,7 @@ public class bionimeController {
 	public String bionimeViewStaff(@PathVariable String id, Model model) throws RecordNotFoundException {
 
 		Gson gson = new Gson();
-		Optional<StaffEntity> staff = staffService.getStaffByName(id);
+		Optional<StaffEntity> staff = staffService.getStaffById(id);
 
 		List<ServiceSiteLogObj> resultServiceSite = new ArrayList<>();
 		List<SiteEntity> allSite = siteService.getAllSite();
