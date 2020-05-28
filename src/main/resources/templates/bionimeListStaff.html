@@ -40,7 +40,7 @@
 			<td><span th:text="${staff.lastUpdate}"> 更新時間 </span></td>
 			<td>
 				<a th:href="@{'bionimeViewStaff/'+${staff.id}}"  style="display:block;">View</a> 
-				<a href="#" th:onclick="@{'deleteStaff('+${staff.id}+')'}" style="display:block;">delete</a>
+				<a href="#" th:onclick="@{'deleteStaff(\''+${staff.id}+'\')'}" style="display:block;">delete</a>
 			</td>
 		</tr>
 	</tbody>

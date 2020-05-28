@@ -143,7 +143,7 @@ public class StaffService {
 		}
 	}
 
-	public Boolean deleteStaffById(int id) throws RecordNotFoundException {
+	public Boolean deleteStaffById(String id) throws RecordNotFoundException {
 		Optional<StaffEntity> staff = staffRepository.findById(id);
 
 		if (staff.isPresent()) {

@@ -72,6 +72,18 @@ function deleteSite(id) {
 }
 
 
+function deleteStaff(id) {
+	$.ajax({
+		url : '/bionime/deleteStaff/' + id,
+		type : 'DELETE',
+		success : function(result) {
+			console.log("deleteStaff: " + result);
+			location.reload();
+		}
+	});
+}
+
+
 
 function ajaxPostAddSitr() {
 

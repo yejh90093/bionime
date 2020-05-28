@@ -116,6 +116,16 @@ public class bionimeController {
 		}
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
+	
+	@DeleteMapping("/deleteStaff/{id}")
+	public ResponseEntity<String> deleteStaff(@PathVariable String id) throws RecordNotFoundException {
+
+		Boolean isRemoved = staffService.deleteStaffById(id);
+		if (!isRemoved) {
+			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
 
 	@PostMapping("/addSite")
 	public ResponseEntity<Map<String, Object>> createSite(@RequestBody SiteEntity site) throws RecordNotFoundException {
